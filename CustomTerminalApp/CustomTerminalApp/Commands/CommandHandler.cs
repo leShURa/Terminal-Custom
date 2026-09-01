@@ -5,7 +5,7 @@ namespace TerminalCustomApp.Commands;
 
 class CommandHandler
 {
-    internal Func<string> Help = () => "Available commands: help, exit, clear, write <text>, date";
+    internal Func<string> Help = () => "Available commands: \n=>help, \n=>exit, \n=>clear, \n=>write <text>, \n=>date, \n=>time, \n=>create_file <path>, \n=>delete_file <path>, \n=>create_dir <path>, \n=>delete_dir <path>, \n=>where, \n=>cd <path>, \n=>ls";
     internal Func<string> Clear = () => "";
     internal Func<string> ListDir = () => string.Join("\n", Directory.GetDirectories("."));
     internal Func<string, string> Write = (text) => text;
