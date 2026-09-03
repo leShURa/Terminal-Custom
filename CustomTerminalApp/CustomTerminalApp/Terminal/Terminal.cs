@@ -16,13 +16,15 @@ internal class Terminal : ITerminal
         { "write", 1 },
         { "date", 0 },
         { "time", 0 },
-        { "create_file", 2 },
-        { "delete_file", 2 },
-        { "create_dir", 2 },
-        { "delete_dir", 2 },
+        { "create_file", 1 },
+        { "delete_file", 1 },
+        { "create_dir", 1 },
+        { "delete_dir", 1 },
         { "where", 0 },
         { "cd", 1 },
-        { "ls", 0 }
+        { "ls", 0 },
+        { "set_foreground_color", 1 },
+        { "set_background_color", 1 }
     };
     public Terminal()
     {
@@ -71,7 +73,7 @@ internal class Terminal : ITerminal
                 string dir = commandHandler.Cd(args[0]);
                 Current_directory = dir;
                 return "ok";
-                case "ls":
+            case "ls":
                 return commandHandler.ListDir();
             default:
                 return null;

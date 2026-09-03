@@ -34,5 +34,5 @@ class CommandHandler
         return Directory.GetCurrentDirectory();
     };
     internal Action Exit = () => Environment.Exit(0);
-    internal Action<string> DeleteDir = (path) => Directory.Delete(path);
+    internal Action<string> DeleteDir = (path) => Directory.Delete(path, recursive: true);
 }

@@ -53,6 +53,47 @@ public partial class MainWindow : Window
             Terminal.Focus();
             return;
         }
+        else if (command_text == "set_background_color")
+        {
+            if (command.Length < 3)
+            {
+                Terminal.AppendText("\nErreur: couleur non fournie. Utilisez un nom (Red) ou #RRGGBB.");
+            }
+            else
+            {
+                string colorToken = command[2];
+                var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    { "rouge", "Red" },
+                    { "bleu", "Blue" },
+                    { "vert", "Green" },
+                    { "noir", "Black" },
+                    { "blanc", "White" },
+                    { "violet", "Purple" },
+                    { "rose", "Pink" },
+                    { "jaune", "Yellow" },
+                    { "cyan", "Cyan" },
+                    { "gris", "Gray" }
+                };
+                if (map.TryGetValue(colorToken, out var mapped))
+                    colorToken = mapped;
+
+                try
+                {
+                    var obj = ColorConverter.ConvertFromString(colorToken);
+                    if (obj is Color c)
+                        {Background = new SolidColorBrush(c);
+                        Terminal.Background = new SolidColorBrush(c);
+                    }
+                    else
+                        Terminal.AppendText("\nErreur: couleur non reconnue.");
+                }
+                catch (FormatException)
+                {
+                    Terminal.AppendText("\nErreur: format de couleur invalide. Utilisez nom anglais ou #RRGGBB.");
+                }
+            }
+        }
         List<string> args = new();
         for (int i = 2; i < command.Length; i++)
         {
