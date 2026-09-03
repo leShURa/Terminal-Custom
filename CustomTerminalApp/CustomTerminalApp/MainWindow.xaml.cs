@@ -33,31 +33,47 @@ public partial class MainWindow : Window
         if (Terminal != null)
             Terminal.Text = $"{terminal.Current_directory}>> ";
             Terminal.FontSize = 20;
-        Terminal.FontFamily = new FontFamily("Consolas");
+            Terminal.FontFamily = new FontFamily("Consolas");
     }
     private void Input_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key != Key.Enter)
             return;
-        
-        string input = Terminal.Text;
+
+        e.Handled = true;
+        int index = Terminal.GetLineIndexFromCharacterIndex(Terminal.CaretIndex);
+        string input = Terminal.GetLineText(index);
         string[] command = input.Split(' ');
         string command_text = command[1];
+        if (command_text == "clear")
+        {
+            Terminal.Clear();
+            Terminal.AppendText($"{terminal.Current_directory}>> ");
+            Terminal.CaretIndex = Terminal.Text.Length;
+            Terminal.Focus();
+            return;
+        }
         List<string> args = new();
         for (int i = 2; i < command.Length; i++)
         {
             args.Add(command[i]);
         }
+        if (args.Count == 0)
+            args.Clear();
+         
+            
         var cmd = new Command(
                 command[1],
                 args
             );
         string? result = terminal.ExecuteCommand(cmd);
-        Terminal.Text += "\n" + result;
-        Terminal.Text += $"\n{terminal.Current_directory}>> ";
+
+        Terminal.AppendText($"\n{result}");
+        Terminal.AppendText($"\n{terminal.Current_directory}>> ");
         Terminal.CaretIndex = Terminal.Text.Length;
-        Terminal.ScrollToEnd();
         Terminal.Focus();
+        Terminal.ScrollToEnd();
+
 
     }
 }

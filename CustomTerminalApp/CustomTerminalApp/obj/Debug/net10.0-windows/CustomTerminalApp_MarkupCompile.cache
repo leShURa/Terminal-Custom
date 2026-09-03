@@ -1,5 +1,5 @@
 ﻿CustomTerminalApp
-
+1.0.0.0
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_O
 C:\Users\adrie\Terminal Custom\CustomTerminalApp\CustomTerminalApp\App.xaml
 11407045341
 
-8-101378200
+101139258511
 206-1943539212
 MainWindow.xaml;
 
-False
+True
 

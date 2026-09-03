@@ -5,7 +5,7 @@ namespace TerminalCustomApp.Terminal;
 
 internal class Terminal : ITerminal
 {
-    public string Current_directory { get; set; } = "C:\\Users";
+    public string Current_directory { get; set; } = Path.Combine("C:", "Users", Environment.UserName);
     private CommandHandler commandHandler = new CommandHandler();
     public List<Command> CommandHistory { get; set; } = new List<Command>();
     public Dictionary<string, int> DictionnaryOfCommands { get; set; } = new ()
@@ -24,6 +24,10 @@ internal class Terminal : ITerminal
         { "cd", 1 },
         { "ls", 0 }
     };
+    public Terminal()
+    {
+        Directory.SetCurrentDirectory(Current_directory);
+    }
     internal string? ExecuteCommand(Command cmd)
     {
         string command = cmd.Command_text;
@@ -42,7 +46,7 @@ internal class Terminal : ITerminal
                 commandHandler.Exit();
                 break;
             case "clear":
-                return commandHandler.Clear(); 
+                return "clear";
             case "write":
                 return commandHandler.Write(args[0]);
             case "date":
@@ -64,8 +68,9 @@ internal class Terminal : ITerminal
             case "where":
                 return commandHandler.Where();
             case "cd":
-                commandHandler.Cd(args[0]);
-                return commandHandler.Where();
+                string dir = commandHandler.Cd(args[0]);
+                Current_directory = dir;
+                return "ok";
                 case "ls":
                 return commandHandler.ListDir();
             default:
